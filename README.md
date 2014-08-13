@@ -77,7 +77,7 @@ Options:
 
 Run the tests with
 
-    expresso test
+    npm test
 
 
 ## License
