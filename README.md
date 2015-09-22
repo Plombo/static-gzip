@@ -16,7 +16,7 @@ Install via npm:
 
 ### staticGzip(root, [options])
 
-Gzips files in a root directory, and then serves them using the [send](https://github.com/pillarjs/send) middleware. Note that options get passed through as well, so the `maxAge` and other options supported by `send` also work.
+Gzips files in a root directory, and then serves them using the [send](https://github.com/pillarjs/send) middleware.
 
 If a file under the root path (such as an image) does not have an appropriate MIME type for compression, it will still be passed through to `send` and served uncompressed. Thus, you can simply use `staticGzip` in place of `connect.static` or `express.static`.
 
