@@ -1,13 +1,15 @@
-# connect-gzip
+# static-gzip
 
 Middleware for [Connect](http://senchalabs.github.com/connect/) or [Express](http://expressjs.com/) that compresses static files using gzip and caches the result on disk for use in future requests.
+
+Based on [connect-gzip](https://github.com/tikonen/connect-gzip).
 
 
 ## Installation
 
-Install via npm (outdated version):
+Install via npm:
 
-    $ npm install connect-gzip
+    $ npm install static-gzip
 
 
 ## Usage
@@ -19,7 +21,7 @@ Gzips files in a root directory, and then serves them using the [send](https://g
 If a file under the root path (such as an image) does not have an appropriate MIME type for compression, it will still be passed through to `send` and served uncompressed. Thus, you can simply use `staticGzip` in place of `connect.static` or `express.static`.
 
     var connect = require('connect'),
-        staticGzip = require('connect-gzip');
+        staticGzip = require('static-gzip');
     
     connect.createServer(
       staticGzip(__dirname + '/public')
@@ -34,7 +36,6 @@ If a file under the root path (such as an image) does not have an appropriate MI
     staticGzip(__dirname + '/public', { maxAge: oneDay })
 
     // Store all gzipped files in a directory called 'public-gzip'
-    var oneDay = 86400000;
     staticGzip(__dirname + '/public', { gzipRoot: __dirname + '/public-gzip' })
 
 Options:
