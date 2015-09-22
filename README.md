@@ -1,6 +1,6 @@
 # connect-gzip
 
-Gzip middleware for [Connect](http://senchalabs.github.com/connect/) on [Node.js](http://nodejs.org). Originally based on implementation included with Connect before version 1.0.
+Middleware for [Connect](http://senchalabs.github.com/connect/) or [Express](http://expressjs.com/) that compresses static files using gzip and caches the result on disk for use in future requests.
 
 
 ## Installation
@@ -12,30 +12,30 @@ Install via npm (outdated version):
 
 ## Usage
 
-### gzip.staticGzip(root, [options])
+### staticGzip(root, [options])
 
 Gzips files in a root directory, and then serves them using the [send](https://github.com/pillarjs/send) middleware. Note that options get passed through as well, so the `maxAge` and other options supported by `send` also work.
 
-If a file under the root path (such as an image) does not have an appropriate MIME type for compression, it will still be passed through to `send` and served uncompressed. Thus, you can simply use `gzip.staticGzip` in place of `connect.static` or `express.static`.
+If a file under the root path (such as an image) does not have an appropriate MIME type for compression, it will still be passed through to `send` and served uncompressed. Thus, you can simply use `staticGzip` in place of `connect.static` or `express.static`.
 
     var connect = require('connect'),
-        gzip = require('connect-gzip');
+        staticGzip = require('connect-gzip');
     
     connect.createServer(
-      gzip.staticGzip(__dirname + '/public')
+      staticGzip(__dirname + '/public')
     ).listen(3000);
     
     
     // Only gzip javascript files:
-    gzip.staticGzip(__dirname + '/public', { matchType: /javascript/ })
+    staticGzip(__dirname + '/public', { matchType: /javascript/ })
 
     // Set a maxAge in milliseconds for browsers to cache files
     var oneDay = 86400000;
-    gzip.staticGzip(__dirname + '/public', { maxAge: oneDay })
+    staticGzip(__dirname + '/public', { maxAge: oneDay })
 
     // Store all gzipped files in a directory called 'public-gzip'
     var oneDay = 86400000;
-    gzip.staticGzip(__dirname + '/public', { gzipRoot: __dirname + '/public-gzip' })
+    staticGzip(__dirname + '/public', { gzipRoot: __dirname + '/public-gzip' })
 
 Options:
 

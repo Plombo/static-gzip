@@ -5,7 +5,7 @@ var connect = require('connect'),
     testCompressed = helpers.testCompressed,
     testRedirect = helpers.testRedirect,
     testMaxAge = helpers.testMaxAge,
-    gzip = require('../index'),
+    staticGzip = require('../staticGzip'),
     
     fixturesPath = __dirname + '/fixtures',
     cssBody = fs.readFileSync(fixturesPath + '/style.css', 'utf8'),
@@ -18,10 +18,10 @@ var connect = require('connect'),
     matchHtml = /text\/html/,
     
     staticDefault = connect.createServer(
-      gzip.staticGzip(fixturesPath)
+      staticGzip(fixturesPath)
     ),
     staticCss = connect.createServer(
-      gzip.staticGzip(fixturesPath, { matchType: /css/ }),
+      staticGzip(fixturesPath, { matchType: /css/ }),
       function(req, res) {
         if (req.url === '/app') {
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -31,7 +31,7 @@ var connect = require('connect'),
       }
     ),
     staticMaxAge = connect.createServer(
-      gzip.staticGzip(fixturesPath, { maxAge: 1234000 })
+      staticGzip(fixturesPath, { maxAge: 1234000 })
     );
 
 describe('staticGzip test', function() {
