@@ -1,11 +1,11 @@
 # connect-gzip
 
-Gzip middleware for [Connect](http://senchalabs.github.com/connect/) on [Node.js](http://nodejs.org). Uses Unix [`gzip`](http://www.freebsd.org/cgi/man.cgi?query=gzip) command to perform compression of dynamic requests or static files. Originally based on implementation included with Connect before version 1.0.
+Gzip middleware for [Connect](http://senchalabs.github.com/connect/) on [Node.js](http://nodejs.org). Originally based on implementation included with Connect before version 1.0.
 
 
 ## Installation
 
-Install via npm:
+Install via npm (outdated version):
 
     $ npm install connect-gzip
 
@@ -43,9 +43,9 @@ Options:
 
 ### gzip.staticGzip(root, [options])
 
-Gzips files in a root directory, and then serves them using the default [`connect.static`](http://senchalabs.github.com/connect/middleware-static.html) middleware. Note that options get passed through as well, so the `maxAge` and other options supported by `connect.static` also work.
+Gzips files in a root directory, and then serves them using the [send](https://github.com/pillarjs/send) middleware. Note that options get passed through as well, so the `maxAge` and other options supported by `send` also work.
 
-If a file under the root path (such as an image) does not have an appropriate MIME type for compression, it will still be passed through to `connect.static` and served uncompressed. Thus, you can simply use `gzip.staticGzip` in place of `connect.static`.
+If a file under the root path (such as an image) does not have an appropriate MIME type for compression, it will still be passed through to `send` and served uncompressed. Thus, you can simply use `gzip.staticGzip` in place of `connect.static` or `express.static`.
 
     var connect = require('connect'),
         gzip = require('connect-gzip');
@@ -62,11 +62,15 @@ If a file under the root path (such as an image) does not have an appropriate MI
     var oneDay = 86400000;
     gzip.staticGzip(__dirname + '/public', { maxAge: oneDay })
 
+    // Store all gzipped files in a directory called 'public-gzip'
+    var oneDay = 86400000;
+    gzip.staticGzip(__dirname + '/public', { gzipRoot: __dirname + '/public-gzip' })
+
 Options:
 
 - `matchType` - A regular expression tested against the file MIME type to determine whether the response should be gzipped or not. As in `connect.static`, MIME types are determined based on file extensions using [node-mime](https://github.com/bentomas/node-mime). The default value is `/text|javascript|json/`.
-- `bin` - Command executed to perform gzipping. Defaults to `'gzip'`.
-- `flags` - Command flags passed to the gzip binary. Defaults to `'--best'` for staticGzip.
+- `maxAge` - Maximum time in milliseconds for browsers to cache files.
+- `gzipRoot` - Root directory for cached gzip files. Defaults to root if not specified.
 
 
 ## Tests
