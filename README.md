@@ -12,35 +12,6 @@ Install via npm (outdated version):
 
 ## Usage
 
-### gzip.gzip([options])
-
-Include this middleware to dynamically gzip data sent via `res.write` or `res.end` based on the Content-Type header.
-
-    var connect = require('connect'),
-        gzip = require('connect-gzip');
-    
-    connect.createServer(
-      gzip.gzip(),
-      function(req, res) {
-        res.setHeader('Content-Type', 'text/html');
-        res.end('<p>Some gzipped HTML!</p>');
-      }
-    ).listen(3000);
-    
-    
-    // Only gzip css files:
-    gzip.gzip({ matchType: /css/ })
-    
-    // Use maximum compression:
-    gzip.gzip({ flags: '--best' })
-
-Options:
-
-- `matchType` - A regular expression tested against the Content-Type header to determine whether the response should be gzipped or not. The default value is `/text|javascript|json/`.
-- `bin` - Command executed to perform gzipping. Defaults to `'gzip'`.
-- `flags` - Command flags passed to the gzip binary. Nothing by default for dynamic gzipping, so gzip will typically default to a compression level of 6.
-
-
 ### gzip.staticGzip(root, [options])
 
 Gzips files in a root directory, and then serves them using the [send](https://github.com/pillarjs/send) middleware. Note that options get passed through as well, so the `maxAge` and other options supported by `send` also work.
